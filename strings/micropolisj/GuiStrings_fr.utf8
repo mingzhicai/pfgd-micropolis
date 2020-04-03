@@ -93,6 +93,7 @@ menu.difficulty.2 = Difficile
 
 menu.disasters = Désastres
 menu.disasters.MONSTER = Monstre
+menu.disasters.MOLE = Mole
 menu.disasters.FIRE = Incendie
 menu.disasters.FLOOD = Inondation
 menu.disasters.MELTDOWN = Catastrophe nucléaire

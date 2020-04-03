@@ -913,6 +913,8 @@ public class Micropolis
 			makeEarthquake();
 			break;
 		case 7:
+			makeMole();
+			break;
 		case 8:
 			if (pollutionAverage > 60) {
 				makeMonster();
@@ -1450,6 +1452,7 @@ public class Micropolis
 		bb = new HashMap<String,TileBehavior>();
 
 		bb.put("FIRE", new TerrainBehavior(this, TerrainBehavior.B.FIRE));
+		//bb.put("MOLE", new TerrainBehavior(this, TerrainBehavior.B.MOLE));
 		bb.put("FLOOD", new TerrainBehavior(this, TerrainBehavior.B.FLOOD));
 		bb.put("RADIOACTIVE", new TerrainBehavior(this, TerrainBehavior.B.RADIOACTIVE));
 		bb.put("ROAD", new TerrainBehavior(this, TerrainBehavior.B.ROAD));
@@ -2343,6 +2346,23 @@ public class Micropolis
 
 		// no "nice" location found, just start in center of map then
 		makeMonsterAt(getWidth()/2, getHeight()/2);
+	}
+	
+	public void makeMole() {// forty attempts at finding place to start fire
+		for (int t = 0; t < 40; t++)
+		{
+			int x = PRNG.nextInt(getWidth());
+			int y = PRNG.nextInt(getHeight());
+			int tile = getTile(x, y);
+			if (!isZoneCenter(tile) && isCombustible(tile))
+			{
+				if (tile > 21 && tile < LASTZONE) {
+					setTile(x, y, (char)(MOLE));
+					sendMessageAt(MicropolisMessage.MOLE_REPORT, x, y);
+					return;
+				}
+			}
+		}
 	}
 
 	void makeMonsterAt(int xpos, int ypos)

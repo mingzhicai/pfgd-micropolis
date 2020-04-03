@@ -33,7 +33,8 @@ public enum MicropolisMessage
 	ROADS_NEED_FUNDING,    //  17            doMessages
 	FIRE_NEED_FUNDING,     //  18            doMessages
 	POLICE_NEED_FUNDING,   //  19            doMessages
-	FIRE_REPORT,           //  20
+	FIRE_REPORT,     
+	MOLE_REPORT,//  20
 	MONSTER_REPORT,
 	TORNADO_REPORT,
 	EARTHQUAKE_REPORT,     //  23            makeEarthquake
@@ -79,6 +80,7 @@ public enum MicropolisMessage
 	// location-specific
 	FLOOD_REPORT.useNotificationPane = true;
 	FIRE_REPORT.useNotificationPane = true;
+	MOLE_REPORT.useNotificationPane = true;
 	TORNADO_REPORT.useNotificationPane = true;
 	MELTDOWN_REPORT.useNotificationPane = true;
 	EARTHQUAKE_REPORT.useNotificationPane = true;

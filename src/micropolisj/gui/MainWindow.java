@@ -600,6 +600,17 @@ public class MainWindow extends JFrame
 			}
 			}));
 		disastersMenu.add(menuItem);
+		
+		menuItem = new JMenuItem(strings.getString("menu.disasters.MOLE"));
+		setupKeys(menuItem, "menu.disasters.MOLE");
+		menuItem.addActionListener(wrapActionListener(
+			new ActionListener() {
+			public void actionPerformed(ActionEvent ev)
+			{
+				onInvokeDisasterClicked(Disaster.MOLE);
+			}
+			}));
+		disastersMenu.add(menuItem);
 
 		menuItem = new JMenuItem(strings.getString("menu.disasters.FIRE"));
 		setupKeys(menuItem, "menu.disasters.FIRE");
@@ -1523,13 +1534,16 @@ public class MainWindow extends JFrame
 		dirty1 = true;
 		switch (disaster) {
 		case FIRE:
-			getEngine().makeFire();
+			getEngine().makeFire(); 
 			break;
 		case FLOOD:
 			getEngine().makeFlood();
 			break;
 		case MONSTER:
 			getEngine().makeMonster();
+			break;
+		case MOLE:
+			getEngine().makeMole();
 			break;
 		case MELTDOWN:
 			if (!getEngine().makeMeltdown()) {

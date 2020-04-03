@@ -23,6 +23,7 @@ class TerrainBehavior extends TileBehavior
 	static enum B
 	{
 		FIRE,
+		MOLE,
 		FLOOD,
 		RADIOACTIVE,
 		ROAD,
