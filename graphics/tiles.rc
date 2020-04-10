@@ -51,10 +51,10 @@
 38    terrain@0,608
 39    terrain@0,624
 # BEGIN WOODS (4 frames) #
-40    terrain@0,640			(bulldozable)(description=#2)
-41    terrain@0,656			(bulldozable)(description=#2)
-42    terrain@0,672			(bulldozable)(description=#2)
-43    terrain@0,688			(bulldozable)(description=#2)
+40    terrain@0,640			(bulldozable)(description=#2)(behavior=PARK)
+41    terrain@0,656			(bulldozable)(description=#2)(behavior=PARK)
+42    terrain@0,672			(bulldozable)(description=#2)(behavior=PARK)
+43    terrain@0,688			(bulldozable)(description=#2)(behavior=PARK)
 # BEGIN RUBBLE (4 frames) #
 44    terrain@0,704     (noburn)(description=#3)
 45    terrain@0,720     (noburn)(description=#3)
@@ -878,10 +878,10 @@
 838   misc_animation@0,176  (conducts)(building-part=716,1,-1)(description=#21)   (becomes=839)(onshutdown=711)
 839   misc_animation@0,192  (conducts)(building-part=716,1,-1)(description=#21)   (becomes=832)(onshutdown=711)
 # BEGIN FOUNTAIN #
-840   misc_animation@0,208                                       (bulldozable)(description=#22)(becomes=841)
-841   misc_animation@0,224                                       (bulldozable)(description=#22)(becomes=842)
-842   misc_animation@0,240                                       (bulldozable)(description=#22)(becomes=843)
-843   misc_animation@0,256                                       (bulldozable)(description=#22)(becomes=840)
+840   misc_animation@0,208                                       (bulldozable)(description=#22)(becomes=841)(behavior=PARK)
+841   misc_animation@0,224                                       (bulldozable)(description=#22)(becomes=842)(behavior=PARK)
+842   misc_animation@0,240                                       (bulldozable)(description=#22)(becomes=843)(behavior=PARK)
+843   misc_animation@0,256                                       (bulldozable)(description=#22)(becomes=840)(behavior=PARK)
 # unknown... (8 frames, known in source code as INDBASE2)
 844   misc_animation@0,272                                       (becomes=845)
 845   misc_animation@0,288                                       (becomes=846)
@@ -1010,4 +1010,5 @@
 958   misc_animation@0,2096
 959   misc_animation@0,2112
 # MOLE #
-960   hole@0,0   (bulldozable)(noburn)
+960   mole@0,0   (bulldozable)(noburn)
+961   hole@0,0   (bulldozable)(noburn)

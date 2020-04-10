@@ -108,6 +108,7 @@ public class Micropolis
 	int poweredZoneCount;
 	int unpoweredZoneCount;
 	int roadTotal;
+	int parkTotal;
 	int railTotal;
 	int firePop;
 	int resZoneCount;
@@ -116,6 +117,8 @@ public class Micropolis
 	int resPop;
 	int comPop;
 	int indPop;
+	int moleCount;
+	int holeCount;
 	int hospitalCount;
 	int churchCount;
 	int policeCount;
@@ -132,6 +135,7 @@ public class Micropolis
 	// used in generateBudget()
 	int lastRoadTotal;
 	int lastRailTotal;
+	int lastParkTotal;
 	int lastTotalPop;
 	int lastFireStationCount;
 	int lastPoliceCount;
@@ -185,7 +189,11 @@ public class Micropolis
 	int floodCnt; //number of turns the flood will last
 	int floodX;
 	int floodY;
-
+	
+	int holeCnt; //number of turns the flood will last
+	int holeX;
+	int holeY;
+	
 	public int cityTime;  //counts "weeks" (actually, 1/48'ths years)
 	int scycle; //same as cityTime, except mod 1024
 	int fcycle; //counts simulation steps (mod 1024)
@@ -522,6 +530,7 @@ public class Micropolis
 		unpoweredZoneCount = 0;
 		firePop = 0;
 		roadTotal = 0;
+		parkTotal = 0;
 		railTotal = 0;
 		resPop = 0;
 		comPop = 0;
@@ -530,6 +539,8 @@ public class Micropolis
 		comZoneCount = 0;
 		indZoneCount = 0;
 		hospitalCount = 0;
+		moleCount = 0;
+		holeCount = 0;
 		churchCount = 0;
 		policeCount = 0;
 		fireStationCount = 0;
@@ -886,7 +897,9 @@ public class Micropolis
 		if (floodCnt > 0) {
 			floodCnt--;
 		}
-
+		if (holeCnt > 0) {
+			holeCnt--;
+		}
 		final int [] DisChance = { 480, 240, 60 };
 		if (noDisasters)
 			return;
@@ -1452,7 +1465,7 @@ public class Micropolis
 		bb = new HashMap<String,TileBehavior>();
 
 		bb.put("FIRE", new TerrainBehavior(this, TerrainBehavior.B.FIRE));
-		//bb.put("MOLE", new TerrainBehavior(this, TerrainBehavior.B.MOLE));
+		bb.put("PARK", new TerrainBehavior(this, TerrainBehavior.B.PARK));
 		bb.put("FLOOD", new TerrainBehavior(this, TerrainBehavior.B.FLOOD));
 		bb.put("RADIOACTIVE", new TerrainBehavior(this, TerrainBehavior.B.RADIOACTIVE));
 		bb.put("ROAD", new TerrainBehavior(this, TerrainBehavior.B.ROAD));
@@ -1730,6 +1743,7 @@ public class Micropolis
 	{
 		lastRoadTotal = roadTotal;
 		lastRailTotal = railTotal;
+		lastParkTotal = parkTotal;
 		lastTotalPop = totalPop;
 		lastFireStationCount = fireStationCount;
 		lastPoliceCount = policeCount;
@@ -2348,23 +2362,73 @@ public class Micropolis
 		makeMonsterAt(getWidth()/2, getHeight()/2);
 	}
 	
-	public void makeMole() {// forty attempts at finding place to start fire
-		for (int t = 0; t < 40; t++)
-		{
+	public void makeMole() {
+		//attempts at finding park or roads to set moles
+		//disaster
+		for (int t = 0; t < 50; t++){
 			int x = PRNG.nextInt(getWidth());
 			int y = PRNG.nextInt(getHeight());
 			int tile = getTile(x, y);
-			if (!isZoneCenter(tile) && isCombustible(tile))
-			{
-				if (tile > 21 && tile < LASTZONE) {
-					setTile(x, y, (char)(MOLE));
-					sendMessageAt(MicropolisMessage.MOLE_REPORT, x, y);
-					return;
+			if (isPark(tile) || isRoad(tile)){
+				setTile(x, y, (char)(MOLE));
+				sendMessageAt(MicropolisMessage.MOLE_REPORT, x, y);
 				}
-			}
-		}
-	}
+			
+					}	
+		}		
+			
+	public void makeFewMole() {
+		//attempts at finding park or roads to set moles
+		for (int t = 0; t < 10; t++){
+			int x = PRNG.nextInt(getWidth());
+			int y = PRNG.nextInt(getHeight());
+			int tile = getTile(x, y);
+			if (isPark(tile) || isRoad(tile)|| isEmptyHole(tile)){
+				setTile(x, y, (char)(MOLE));
+				sendMessageAt(MicropolisMessage.MOLE_REPORT, x, y);
+				}
+			
+					}	
+		}		
+				
+	public void replaceMole() {
+		//attempts at finding moles and put holes or finding holes and put moles
+		for (int t = 0; t < 500; t++){
+			int x = PRNG.nextInt(getWidth());
+			int y = PRNG.nextInt(getHeight());
+			int tile = getTile(x, y);
+				if(isMole(tile)) {
+				    setTile(x, y, (char)(HOLE));
+				}
+				}
+				}			
 
+	public static int getRandom(int[] array) {
+	    int rnd = new Random().nextInt(array.length);
+	    return array[rnd];
+	}
+	
+	public void makeHole() {
+		//attempts at finding moles to set holes around them
+		final int [] DX = { -4,-2,2,4 };
+		for (int t = 0; t < 1000; t++){
+			int x = PRNG.nextInt(getWidth());
+			int y = PRNG.nextInt(getHeight());
+			int tile = getTile(x, y);
+			if (isMole(tile))
+			{
+				for (int z = 0; z < 2; z++) {
+					int xx = x + getRandom(DX);
+					int yy = y + getRandom(DX);
+					int c = getTile(xx,yy);
+					if (isPark(c)||isRoad(c)) {
+						setTile(xx, yy, HOLE);
+							}	
+					}	
+			}
+		}	
+	}
+	
 	void makeMonsterAt(int xpos, int ypos)
 	{
 		assert !hasSprite(SpriteKind.GOD);
@@ -2535,8 +2599,12 @@ public class Micropolis
 	void doMessages()
 	{
 		//MORE (scenario stuff)
-
+	
 		checkGrowth();
+		makeFewMole();
+		makeHole();
+		replaceMole();
+		
 
 		int totalZoneCount = resZoneCount + comZoneCount + indZoneCount;
 		int powerCount = nuclearCount + coalCount;
@@ -2651,6 +2719,7 @@ public class Micropolis
 
 	void clearMes()
 	{
+
 		//TODO.
 		// What this does in the original code is clears the 'last message'
 		// properties, ensuring that the next message will be delivered even

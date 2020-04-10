@@ -228,6 +228,7 @@ class MapScanner extends TileBehavior
 		city.fireStMap[ypos/8][xpos/8] += z;
 	}
 
+
 	void doPoliceStation()
 	{
 		boolean powerOn = checkZonePower();

@@ -195,7 +195,7 @@ public class ToolStroke
 		}
 	}
 
-	boolean applyParkTool(ToolEffectIfc eff)
+	public boolean applyParkTool(ToolEffectIfc eff)
 	{
 		int cost = tool.getToolCost();
 
@@ -209,7 +209,10 @@ public class ToolStroke
 			//FIXME- use a canAutoBulldoze-style function here
 			if (isRubble(eff.getTile(0, 0))) {
 				// this tile can be auto-bulldozed
+			
 				cost++;
+			
+				
 			}
 			else {
 				// cannot be auto-bulldozed
@@ -222,12 +225,17 @@ public class ToolStroke
 		int tile;
 		if (z < 4) {
 			tile = WOODS2 + z;
+		
 		} else {
 			tile = FOUNTAIN;
+			
 		}
 
 		eff.spend(cost);
+	
 		eff.setTile(0, 0, tile);
+		
+		
 
 		return true;
 	}

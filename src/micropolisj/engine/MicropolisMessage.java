@@ -48,7 +48,8 @@ public enum MicropolisMessage
 	NEED_PARKS,
 	EXPLOSION_REPORT,
 	INSUFFICIENT_FUNDS,    //  33            MainWindow.applyCurrentTool
-	BULLDOZE_FIRST,        //  34            MainWindow.applyCurrentTool
+	BULLDOZE_FIRST,  
+	PARK_BUILT,//  34            MainWindow.applyCurrentTool
 	POP_2K_REACHED,        //  35            checkGrowth          1/19
 	POP_10K_REACHED,       //  36            checkGrowth
 	POP_50K_REACHED,       //  37            checkGrowth
@@ -69,7 +70,8 @@ public enum MicropolisMessage
 	static
 	{
 	// not location-specific
-	POP_2K_REACHED.useNotificationPane = true;
+    PARK_BUILT.useNotificationPane = true;
+	POP_2K_REACHED.useNotificationPane = true;      
 	POP_10K_REACHED.useNotificationPane = true;
 	POP_50K_REACHED.useNotificationPane = true;
 	POP_100K_REACHED.useNotificationPane = true;

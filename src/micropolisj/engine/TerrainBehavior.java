@@ -23,11 +23,12 @@ class TerrainBehavior extends TileBehavior
 	static enum B
 	{
 		FIRE,
-		MOLE,
+		HOLE,
 		FLOOD,
 		RADIOACTIVE,
 		ROAD,
 		RAIL,
+		PARK,
 		EXPLOSION;
 	}
 
@@ -49,6 +50,9 @@ class TerrainBehavior extends TileBehavior
 			return;
 		case RAIL:
 			doRail();
+			return;
+		case PARK:
+			doPark();
 			return;
 		case EXPLOSION:
 			doExplosion();
@@ -105,6 +109,7 @@ class TerrainBehavior extends TileBehavior
 	/**
 	 * Called when the current tile is a flooding tile.
 	 */
+	
 	void doFlood()
 	{
 		final int [] DX = { 0, 1, 0, -1 };
@@ -138,6 +143,8 @@ class TerrainBehavior extends TileBehavior
 			}
 		}
 	}
+	
+	
 
 	/**
 	 * Called when the current tile is a radioactive tile.
@@ -212,6 +219,8 @@ class TerrainBehavior extends TileBehavior
 	/**
 	 * Called when the current tile is railroad.
 	 */
+	
+
 	void doRail()
 	{
 		city.railTotal++;
@@ -231,7 +240,10 @@ class TerrainBehavior extends TileBehavior
 			}
 		}
 	}
-
+	
+	void doPark() {
+		city.parkTotal++;
+	}
 	/**
 	 * Called when the current tile is a road bridge over water.
 	 * Handles the draw bridge. For the draw bridge to appear,

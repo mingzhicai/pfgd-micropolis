@@ -152,6 +152,7 @@ public class TileConstants
 	static final char VBRDG3 = 951;
 	public static final char LAST_TILE = 956;
 	static final char MOLE =960;
+	static final char HOLE =961;
 
 	static final char [] RoadTable = new char[] {
 		ROADS, ROADS2, ROADS, ROADS3,
@@ -384,6 +385,27 @@ public class TileConstants
 		assert (tile & LOMASK) == tile;
 
 		return tile >= FIRSTRIVEDGE && tile <= LASTRIVEDGE;
+	}
+
+	static boolean isHole(int tile)
+	{
+		assert (tile & LOMASK) == tile;
+
+		return tile == HOLE || tile == MOLE;
+	}
+
+	static boolean isMole(int tile)
+	{
+		assert (tile & LOMASK) == tile;
+
+		return tile == MOLE;
+	}
+	
+	static boolean isEmptyHole(int tile)
+	{
+		assert (tile & LOMASK) == tile;
+
+		return tile == HOLE;
 	}
 
 	public static boolean isDozeable(int tile)
@@ -635,6 +657,15 @@ public class TileConstants
 		return tile >= RESBASE &&
 			tile < HOSPITAL;
 	}
+	
+	public static boolean isPark(int tile)
+	{
+		assert (tile & LOMASK) == tile;
+
+		return (tile >= WOODS2 &&
+				tile <= WOODS5) ||
+			tile == FOUNTAIN;
+	}
 
 	// includes hospital/church.
 	public static boolean isResidentialZoneAny(int tile)
@@ -667,6 +698,7 @@ public class TileConstants
 		return spec != null && spec.zone;
 	}
 
+	
 	/**
 	 * Converts a road tile value with traffic to the equivalent
 	 * road tile without traffic.
