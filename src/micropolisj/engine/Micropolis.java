@@ -2365,13 +2365,14 @@ public class Micropolis
 	public void makeMole() {
 		//attempts at finding park or roads to set moles
 		//disaster
-		for (int t = 0; t < 50; t++){
+		for (int t = 0; t < 500; t++){
 			int x = PRNG.nextInt(getWidth());
 			int y = PRNG.nextInt(getHeight());
 			int tile = getTile(x, y);
 			if (isPark(tile) || isRoad(tile)){
 				setTile(x, y, (char)(MOLE));
 				sendMessageAt(MicropolisMessage.MOLE_REPORT, x, y);
+				return;
 				}
 			
 					}	
@@ -2399,6 +2400,20 @@ public class Micropolis
 			int tile = getTile(x, y);
 				if(isMole(tile)) {
 				    setTile(x, y, (char)(HOLE));
+				}
+				}
+				}			
+
+	public void replaceHole() {
+		//attempts at finding moles and put holes or finding holes and put moles
+		for (int t = 0; t < 500; t++){
+			int x = PRNG.nextInt(getWidth());
+			int y = PRNG.nextInt(getHeight());
+			int tile = getTile(x, y);
+				if(isMole(tile)) {
+				    setTile(x, y, (char)(MOLE));
+				    sendMessageAt(MicropolisMessage.MOLE_REPORT, x, y);
+				    return;
 				}
 				}
 				}			
@@ -2604,6 +2619,7 @@ public class Micropolis
 		makeFewMole();
 		makeHole();
 		replaceMole();
+		replaceHole();
 		
 
 		int totalZoneCount = resZoneCount + comZoneCount + indZoneCount;
